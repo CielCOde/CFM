@@ -21,7 +21,7 @@ $code_article = $result['CODE'];
 if (!isset($_SESSION['token'][$code_article])) {
 
     $token = bin2hex(random_bytes(64));
-    $specialChar = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+    $specialChar = '!#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
     $code_token = str_shuffle($token . $specialChar);
 
     $_SESSION['token'][$code_article] = $code_token;
