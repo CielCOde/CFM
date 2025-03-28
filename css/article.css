@@ -27,3 +27,42 @@ body {
 .price{
     font-weight: 600;
 }
+.container-artInfo {
+    display: flex;
+    border-radius: 25px;
+    background-color: #e6e6d163;
+    /* Added these for layout */
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    align-items: flex-start; /* Align items to the start (top) */
+    position: relative; /* Needed for absolute positioning of button */
+    padding-bottom: 40px; /* Add padding at the bottom for the button */
+}
+
+.container-artInfo .image-container {
+    margin-right: 20px; /* Add some margin between image and description */
+}
+
+
+.container-des {
+    padding: 5px;
+    flex: 1; /* Allow description to take up available space */
+    min-width: 200px; /* Prevent description from getting too narrow */
+}
+
+.container-artInfo .button-container {
+    /* New styles to position the button */
+    position: absolute; /* Position absolutely within the container */
+    bottom: 10px;      /* Position at the bottom */
+    right: 10px;       /* Position at the right */
+}
+.container-artInfo button{
+    margin-top: 20px;
+}
+button{
+    padding: 15px;
+    background-color: #e31212e0;
+    border-radius: 25px;
+    border: none;
+    font-family:'Roboto', sans-serif;
+    cursor: pointer;
+}
