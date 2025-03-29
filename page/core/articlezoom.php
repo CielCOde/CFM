@@ -15,19 +15,11 @@ $image = $result['IMG'];
 $title = $result['TITLE'];
 $content = $result['CONTENT'];
 $prix = $result['PRICE'];
-$code_article = $result['CODE'];
-//chiffrement du code article
-//verificqtion de l'existance du token
-if (!isset($_SESSION['token'][$code_article])) {
+$code = $result['CODE'];
 
-    $token = bin2hex(random_bytes(64));
-    $specialChar = '!#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
-    $code_token = str_shuffle($token . $specialChar);
+    //intégration du token
+    include("../page/core/token_generate.php");
 
-    $_SESSION['token'][$code_article] = $code_token;
-} else {
-    $code_token = $_SESSION['token'][$code_article];
-}
 ?>
 <h1>Information article : </h1>
 <div class="container-artInfo">

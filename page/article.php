@@ -3,7 +3,7 @@
 session_start();
 
 use BcMath\Number;
-
+include("../banniere.php");
 include("../config/db_config.php");
 
 $code = $_GET['product'] ?? null;
@@ -38,16 +38,9 @@ if (is_numeric($code)) {
     <div class="container-article">
         <?php foreach ($articles as $article) {
             $code = $article['CODE'];
-
-            if (!isset($_SESSION['token'][$code])) {
-                $token = bin2hex(random_bytes(64));
-                $specialChar = '!#$%&()*\+,-./:;<=>?@[\\]^_`{|}~';
-                $code_token = str_shuffle($code . $specialChar);
-                $_SESSION['token'][$code] = $code_token;
-            } else {
-                $code_token = $_SESSION['token'][$code];
-            }
-
+            //intégration du token
+            include("../page/core/token_generate.php");
+            
         ?>
             <div class="box-container">
                 <div>

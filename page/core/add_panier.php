@@ -21,6 +21,12 @@ foreach ($token_session as $code => $token) {
         $result = $results[0];
         $title = $result['TITLE'];
 
+        $_SESSION['panier'][$code] = [
+            'title' => $title,
+            'price' => $result['PRICE'],
+            'img' => $result['IMG']
+        ];
+
         echo json_encode(['status' => 'success', 'message' => 'L\'Article ' . $title . ' à été ajouté au panier ✅']);
         error_log("Token de session : " . $token . "et token envoyée = " . $product_token);
         error_log("Code article retrouvé : " . $code . ", Token : " . $token);
