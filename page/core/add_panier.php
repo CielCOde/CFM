@@ -24,7 +24,9 @@ foreach ($token_session as $code => $token) {
         $_SESSION['panier'][$code] = [
             'title' => $title,
             'price' => $result['PRICE'],
-            'img' => $result['IMG']
+            'img' => $result['IMG'],
+            'quantity' => $quantite,
+            'code' => $code,
         ];
 
         echo json_encode(['status' => 'success', 'message' => 'L\'Article ' . $title . ' à été ajouté au panier ✅']);

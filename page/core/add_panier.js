@@ -43,7 +43,7 @@ send_panier.forEach(function (send_panier) {
 
         // Add event listener to button
         modalButton.addEventListener('click', function () {
-            let demandeQuantite = modalInput.value;
+            let demandeQuantite = modalInput.value === '' ? 1 : modalInput.value;
             sendPanier(code, demandeQuantite);
             document.body.removeChild(modal);
         });

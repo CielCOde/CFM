@@ -9,5 +9,8 @@ $panierCount = count($panier);
 
 // Return the count as a JSON response
 header('Content-Type: application/json');
-echo json_encode(['count' => $panierCount]);
+echo json_encode([
+    'count' => $panierCount,
+    'panier' => $panier, 
+]);
 ?>

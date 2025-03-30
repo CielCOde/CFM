@@ -16,31 +16,82 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
             </ul>
         </nav>
         <div class="panier-container">
+
             <img src="../img/panier.jpeg" alt="Panier" class="panier-icon">
             <span class="panier-count" id="panier-count">0</span>
+
+            <div id="panier" class="panier">
+
+            </div>
         </div>
     </div>
 
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-    const updatePanierCount = () => {
-        fetch("<?php echo $racine_site;?>page/core/get_panier.php")
-            .then(response => response.json())
-            .then(data => {
-                const panierCountElement = document.getElementById("panier-count");
-                if (panierCountElement && data.count !== undefined) {
-                    panierCountElement.textContent = data.count;
-                }
-            })
-            .catch(error => console.error("Error fetching panier count:", error));
-    };
+        const updatePanierCount = () => {
+            fetch("<?php echo $racine_site; ?>page/core/get_panier.php")
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const panierCountElement = document.getElementById("panier-count");
+                    if (panierCountElement && data.count !== undefined) {
+                        panierCountElement.textContent = data.count;
+                        const panier = document.getElementById("panier");
+                        panier.innerHTML = `<p id="countPanier">Nombre d'articles dans le panier : ${data.count}</p>`;
+                        let totalprice = 0;
 
-    // Initial update
-    updatePanierCount();
+                        let Tabpanier = data.panier;
+                        for (const ArticleId in Tabpanier) {
+                            const article = Tabpanier[ArticleId];
+                            totalprice += article.price * article.quantity;
+                            let articleDiv = document.createElement("div");
+                            articleDiv.style.display = "grid";
+                            articleDiv.style.gridTemplateColumns = "50px auto 50px 80px"; // Ajustez les largeurs selon vos besoins
+                            articleDiv.style.alignItems = "center";
+                            articleDiv.style.gap = "10px"; // Espace entre les éléments
+                            articleDiv.style.borderBottom = "1px solid #ccc";
+                            articleDiv.style.padding = "10px 0"; // Ajoute un peu d'espace en haut et en bas
 
-    // Update every 10 seconds
-    setInterval(updatePanierCount, 10000);
-});
+                            let img = document.createElement("img");
+                            img.src = article.img;
+                            img.alt = "Image de l'article";
+                            img.width = 50;
+                            img.height = 50;
+                            articleDiv.appendChild(img);
 
+                            let nomArticle = document.createElement("p");
+                            nomArticle.textContent = article.title;
+                            articleDiv.appendChild(nomArticle);
+
+                            let quantiteArticle = document.createElement("p");
+                            quantiteArticle.textContent = "x" + article.quantity;
+                            quantiteArticle.style.fontWeight = "bold";
+                            articleDiv.appendChild(quantiteArticle);
+
+                            let prixArticle = document.createElement("p");
+                            prixArticle.textContent = article.price + " €";
+                            prixArticle.style.fontWeight = "bold";
+                            articleDiv.appendChild(prixArticle);
+
+                            panier.appendChild(articleDiv);
+                        }
+                        const prixTotalElement = document.createElement("p");
+                        prixTotalElement.textContent = `Prix total : ${totalprice} €`;
+
+                        const countPanierElement = document.getElementById("countPanier");
+                        if (countPanierElement) {
+                            countPanierElement.insertAdjacentElement('afterend', prixTotalElement);
+                        }
+                    }
+                })
+                .catch(error => console.error("Error fetching panier count:", error));
+        };
+
+        // Initial update
+        updatePanierCount();
+
+        // Update every 10 seconds
+        setInterval(updatePanierCount, 10000);
+    });
 </script>

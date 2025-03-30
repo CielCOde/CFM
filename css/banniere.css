@@ -26,10 +26,10 @@ body {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 .nav-container {
-    display: flex;
-    align-items: center;
-    /* justify-content: space-between;  Supprimé pour séparer panier et nav-list */
-    gap: 20px; /* Ajout d'un espacement entre panier et nav-list */
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between;  Supprimé pour séparer panier et nav-list */
+  gap: 20px; /* Ajout d'un espacement entre panier et nav-list */
 }
 .nav-list {
   list-style: none;
@@ -63,6 +63,7 @@ body {
   width: 100%;
 }
 .panier-container {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,4 +99,21 @@ body {
   font-size: 1rem;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+.panier {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 15px;
+  background-color: #ffffff;
+  border: 2px solid #d87854;
+  border-radius: 15px;
+  padding: 10px 15px;
+  width: 500px;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.panier-container:hover .panier {
+  display: block;
 }
