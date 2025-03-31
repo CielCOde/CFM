@@ -107,7 +107,7 @@ function showNotification(message, type) {
     const style = document.createElement('style');
     style.innerHTML = `
      .notification {
-     height: 100px;
+     height: auto;
      position: fixed;
      top: 20px;
      right: 20px;

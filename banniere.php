@@ -3,10 +3,21 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
 ?>
 <link rel="stylesheet" href="../css/banniere.css">
 <div class="banner">
+    <div class="login-container">
+        <a href="<?php echo $racine_site; ?>page/login.php" class="login-link">
+            Connexion
+        </a>
+        <strong style="color: white;">/</strong>
+        <a href="<?php echo $racine_site; ?>page/register.php" class="login-link">
+            Inscription
+        </a>
+    </div>
+
     <div class="logo-container">
         <img src="../img/logo/CFM.webp" alt="Logo CFM" class="logo">
         <h1 class="site-title">CFM</h1>
     </div>
+
     <div class="nav-container">
         <nav>
             <ul class="nav-list">
@@ -24,6 +35,14 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
 
             </div>
         </div>
+        <div class="search-container">
+            <form action="<?php echo $racine_site; ?>page/article.php?shearch=" method="get" class="search-form">
+                <input type="text" name="shearch" placeholder="Rechercher un article" class="search-input" id="search-input">
+                <button type="submit" class="search-button">
+                    <img src="<?php echo $racine_site; ?>/img/loupe.png" alt="Rechercher" class="search-icon" width="20" height="20">
+                </button>
+            </form>
+        </div>
     </div>
 
 </div>
@@ -33,7 +52,6 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
             fetch("<?php echo $racine_site; ?>page/core/get_panier.php")
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     const panierCountElement = document.getElementById("panier-count");
                     if (panierCountElement && data.count !== undefined) {
                         panierCountElement.textContent = data.count;
@@ -94,4 +112,15 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
         // Update every 10 seconds
         setInterval(updatePanierCount, 10000);
     });
+
+    //animation de recherche
+    const searchInput = document.getElementById("search-input");
+
+    searchInput.addEventListener("focus", () => {
+        searchInput.classList.add("expanded");
+    })
+
+    searchInput.addEventListener("blur", () => {
+        searchInput.classList.remove("expanded");
+    })
 </script>

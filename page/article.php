@@ -3,8 +3,12 @@
 session_start();
 
 use BcMath\Number;
+
 include("../banniere.php");
 include("../config/db_config.php");
+
+$shearch = $_GET['shearch'] ?? null;
+
 
 $code = $_GET['product'] ?? null;
 if (is_string($code) && !empty($code) && !preg_match('/\d/', $code)) {
@@ -14,7 +18,6 @@ if (is_string($code) && !empty($code) && !preg_match('/\d/', $code)) {
 if (is_numeric($code)) {
 
     include("../page/core/articlezoom.php");
-    
 } else if ($code == null) {
     $sql_request = "SELECT * FROM article";
     $result = $pdo->query($sql_request);
@@ -35,12 +38,20 @@ if (is_numeric($code)) {
         return $formatter->format($date);
     }
 ?>
+<div class="container-principal">
+    <div class="filter-container" id="filter-container">
+
+    </div>
     <div class="container-article">
         <?php foreach ($articles as $article) {
             $code = $article['CODE'];
             //intégration du token
             include("../page/core/token_generate.php");
-            
+            if(isset($shearch)){
+               if (stripos($article['TITLE'], $shearch) === false && stripos($article['CONTENT'], $shearch) === false) {
+                    continue; // Ignore cet article s'il ne correspond pas à la recherche
+                }
+            }
         ?>
             <div class="box-container">
                 <div>
@@ -65,17 +76,10 @@ if (is_numeric($code)) {
             </div>
         <?php } ?>
     </div>
+</div>
+    
 <?php
 }
-/*
-if (isset($_SESSION['token'])) {
-    foreach ($_SESSION['token'] as $code => $token) {
-        echo "Code article : " . $code . ", Token : " . $token . "<br>";
-    }
-} else {
-    echo "Aucun token stocké dans la session.";
-}*/
-
 ?>
 
 <script src="../page/core/add_panier.js"></script>

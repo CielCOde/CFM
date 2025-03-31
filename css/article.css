@@ -60,3 +60,7 @@ button{
     font-family:'Roboto', sans-serif;
     cursor: pointer;
 }
+.container-principal{
+    display: flex;
+    justify-content: center;
+}
