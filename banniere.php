@@ -4,9 +4,17 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
 <link rel="stylesheet" href="../css/banniere.css">
 <div class="banner">
     <div class="login-container">
-        <a href="<?php echo $racine_site; ?>page/login.php" class="login-link">
-            Connexion
-        </a>
+        <?php
+        if (isset($_SESSION['user']['valid']) && $_SESSION['user']['valid'] == true) { ?>
+            <a href="<?php echo $racine_site; ?>page/deconnect.php" class="login-link">
+                Déconnexion
+            </a>
+        <?php } else { ?>
+
+            <a href="<?php echo $racine_site; ?>page/login.php" class="login-link">
+                Connexion
+            </a>
+        <?php } ?>
         <strong style="color: white;">/</strong>
         <a href="<?php echo $racine_site; ?>page/register.php" class="login-link">
             Inscription

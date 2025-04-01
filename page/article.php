@@ -4,8 +4,9 @@ session_start();
 
 use BcMath\Number;
 
-include("../banniere.php");
+
 include("../config/db_config.php");
+include("../banniere.php");
 
 $shearch = $_GET['shearch'] ?? null;
 
@@ -38,46 +39,46 @@ if (is_numeric($code)) {
         return $formatter->format($date);
     }
 ?>
-<div class="container-principal">
-    <div class="filter-container" id="filter-container">
+    <div class="container-principal">
+        <div class="filter-container" id="filter-container">
 
-    </div>
-    <div class="container-article">
-        <?php foreach ($articles as $article) {
-            $code = $article['CODE'];
-            //intégration du token
-            include("../page/core/token_generate.php");
-            if(isset($shearch)){
-               if (stripos($article['TITLE'], $shearch) === false && stripos($article['CONTENT'], $shearch) === false) {
-                    continue; // Ignore cet article s'il ne correspond pas à la recherche
+        </div>
+        <div class="container-article">
+            <?php foreach ($articles as $article) {
+                $code = $article['CODE'];
+                //intégration du token
+                include("../page/core/token_generate.php");
+                if (isset($shearch)) {
+                    if (stripos($article['TITLE'], $shearch) === false && stripos($article['CONTENT'], $shearch) === false) {
+                        continue; // Ignore cet article s'il ne correspond pas à la recherche
+                    }
                 }
-            }
-        ?>
-            <div class="box-container">
-                <div>
-                    <img src="<?php echo $article['IMG']; ?>" width="130px" height="130px">
-                </div>
-                <div style="margin-right: 15px;">
-                    <div class="ref-article">
-                        <a href="<?php echo "./article.php?product=" . $article['CODE']; ?>">
-                            <h3><?php echo $article['TITLE']; ?></h3>
-                        </a>
-                        <p style="color:#3d3d329c; ">Code : <?php echo $article['CODE']; ?></p>
-                        <p class="price">Prix : <?php echo $article['PRICE']; ?>€</p>
+            ?>
+                <div class="box-container">
+                    <div>
+                        <img src="<?php echo $article['IMG']; ?>" width="130px" height="130px">
                     </div>
-                    <p>Description : <?php echo $article['CONTENT']; ?></p>
-                    <p>Ajouté le : <?php echo str_time($article['PUBLISHED']); ?></p>
+                    <div style="margin-right: 15px;">
+                        <div class="ref-article">
+                            <a href="<?php echo "./article.php?product=" . $article['CODE']; ?>">
+                                <h3><?php echo $article['TITLE']; ?></h3>
+                            </a>
+                            <p style="color:#3d3d329c; ">Code : <?php echo $article['CODE']; ?></p>
+                            <p class="price">Prix : <?php echo $article['PRICE']; ?>€</p>
+                        </div>
+                        <p>Description : <?php echo $article['CONTENT']; ?></p>
+                        <p>Ajouté le : <?php echo str_time($article['PUBLISHED']); ?></p>
+                    </div>
+                    <div class="button-container">
+                        <button class="send_panier" data-code="<?php echo $code_token; ?>">
+                            Ajouter au panier
+                        </button>
+                    </div>
                 </div>
-                <div class="button-container">
-                    <button class="send_panier" data-code="<?php echo $code_token; ?>">
-                        Ajouter au panier
-                    </button>
-                </div>
-            </div>
-        <?php } ?>
+            <?php } ?>
+        </div>
     </div>
-</div>
-    
+
 <?php
 }
 ?>
