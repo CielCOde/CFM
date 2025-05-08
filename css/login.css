@@ -79,7 +79,13 @@
 }
 
 .error-message {
+    display: flex;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: red;
     margin-top: 16px;
-    font-size: 12px;
+    font-size: 14px;
+    padding: 10px;
+    background-color:#ff99996e;
+    border-radius: 10px;
 }

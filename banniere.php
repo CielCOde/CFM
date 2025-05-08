@@ -5,7 +5,11 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
 <div class="banner">
     <div class="login-container">
         <?php
-        if (isset($_SESSION['user']['valid']) && $_SESSION['user']['valid'] == true) { ?>
+
+        if (isset($_SESSION['user']['valid']) && $_SESSION['user']['valid'] == true) {
+
+            echo "<p style ='color:white; margin-right: 10px'>" . $_SESSION['user']['name'] . "</p>";
+            ?>
             <a href="<?php echo $racine_site; ?>page/deconnect.php" class="login-link">
                 Déconnexion
             </a>
@@ -30,7 +34,7 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
         <nav>
             <ul class="nav-list">
                 <li><a href="<?php echo $racine_site; ?>index.php">Accueil</a></li>
-                <li><a href="<?php echo $racine_site; ?>page/article.php">Articles</a></li>
+                <li><a href="<?php echo $racine_site; ?>page/article.php">Composant</a></li>
                 <li><a href="<?php echo $racine_site; ?>page/contact.php">Contact</a></li>
             </ul>
         </nav>
@@ -43,17 +47,29 @@ $racine_site = "http://" . $_SERVER['HTTP_HOST'] . "/"; // Chemin vers le dossie
 
             </div>
         </div>
-        <div class="search-container">
-            <form action="<?php echo $racine_site; ?>page/article.php?shearch=" method="get" class="search-form">
-                <input type="text" name="shearch" placeholder="Rechercher un article" class="search-input" id="search-input">
-                <button type="submit" class="search-button">
-                    <img src="<?php echo $racine_site; ?>/img/loupe.png" alt="Rechercher" class="search-icon" width="20" height="20">
-                </button>
-            </form>
-        </div>
     </div>
 
 </div>
+<!-- Navigation principale -->
+<nav class="main-nav">
+    <div class="nav-container2">
+        <ul class="nav-links">
+            <li><a href="#">PC Gaming</a></li>
+            <li><a href="#">PC Bureautique</a></li>
+            <li><a href="#">Portables</a></li>
+            <li><a href="#">PC sur mesure</a></li>
+            <li><a href="#">Promotions</a></li>
+        </ul>
+    </div>
+    <div class="search-container">
+        <form action="<?php echo $racine_site; ?>page/article.php?shearch=" method="get" class="search-form">
+            <input type="text" name="shearch" placeholder="Rechercher un article" class="search-input" id="search-input">
+            <button type="submit" class="search-button">
+                <img src="<?php echo $racine_site; ?>/img/loupe.png" alt="Rechercher" class="search-icon" width="20" height="20">
+            </button>
+        </form>
+    </div>
+</nav>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const updatePanierCount = () => {

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/banniere.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="login-center">
+        <div class="login-container-form">
+            <h1>Connexion</h1>
+            <form action="login.php" method="post" class="login-form">
+                <label for="username">Nom d'utilisateur:</label>
+                <input type="text" id="email" name="email" required value="<?php echo $email; ?>"><br>
+
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password"><br><br>
+
+                <input type="submit" value="Se connecter">
+            </form>
+            <div class="error-message">
+                <p style="font-size:32px;">⛔</p>
+                <p>
+                    Erreur lors de la mise à jour de la session.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

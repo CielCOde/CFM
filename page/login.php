@@ -11,8 +11,12 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 
+$type_user = $_POST['type_user'] ?? "une erreur c'est produite";
+error_log($type_user);
+
 $email = $_POST['email'] ?? null;
 $password = $_POST['password'] ?? null;
+
 if ($password == "") {
     $password = null;
 }
@@ -20,9 +24,9 @@ if ($password == "") {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($email) && $password === null) {
         // Cas 1 : L'email est fourni, mais le mot de passe est vide. Vérifie si l'utilisateur existe.
-        $sql_request = "SELECT * FROM admin WHERE email = :email";
+        $sql_request = "SELECT * FROM $type_user WHERE email = :email";
         $stmt = $pdo->prepare($sql_request);
-        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -44,14 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
             } else {
                 // L'utilisateur a déjà un mot de passe.  Affiche un message d'erreur.
-                $error_message = "Un mot de passe existe déjà pour cet email. Veuillez vous connecter.";
+                $error_message = "Mot de passe incorrect!";
             }
         } else {
             $error_message = 'Aucun compte trouvé avec cet email.';
         }
     } else {
         // Cas 2 : Email et mot de passe sont fournis. Tente la connexion.
-        $sql_request = "SELECT * FROM admin WHERE email = :email";
+        $sql_request = "SELECT * FROM  $type_user  WHERE email = :email";
         $stmt = $pdo->prepare($sql_request);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
@@ -76,7 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['user'] = array(
                         'id' => $user['id'],
                         'token' => $token_session,
+                        'name' => $user['name'] . " " . $user['firstname'],
                         'valid' => true,
+                        'is_admin' => true,
                     );
 
                     header("Location: " . $Link_site . "index.php");
@@ -112,16 +118,25 @@ include("../banniere.php");
         <div class="login-container-form">
             <h1>Connexion</h1>
             <form action="login.php" method="post" class="login-form">
+                <label for="type_user">Choisissez un type d'utilisateur :*</label>
+                <select name="type_user" id="type_user">
+                    <option value="admin">Administrateur</option>
+                    <option value="user">Utilisateur</option>
+                </select>
+                <br>
                 <label for="username">Nom d'utilisateur:</label>
                 <input type="text" id="email" name="email" required value="<?php echo $email; ?>"><br>
 
                 <label for="password">Mot de passe:</label>
-                <input type="password" id="password" name="password"><br><br>
+                <input type="password" id="password" name="password"><br>
 
                 <input type="submit" value="Se connecter">
             </form>
             <?php if (isset($error_message)) { ?>
-                <p class="error-message"><?php echo $error_message; ?></p>
+                <div class="error-message">
+                    <p style="font-size:32px;">⛔</p>
+                    <p><?php echo $error_message; ?></p>
+                </div>
             <?php } ?>
         </div>
     </div>

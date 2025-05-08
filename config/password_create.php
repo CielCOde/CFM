@@ -10,8 +10,8 @@ $token = $_SESSION['token'];
 
 foreach ($token as $user_id => $token_value) {
     error_log("Token for user $user_id: " . json_encode($token_value), 0);
-    if ($data['token'] === $token_value) {
-        $password = password_hash($data['password'], PASSWORD_DEFAULT);
+    if ($data['token'] === $token_value) {// vérifie si le token correspond au token session
+        $password = password_hash($data['password'], PASSWORD_DEFAULT);// pass hash crypte le mdp
         $sql_request = "UPDATE admin SET password = :password WHERE id = :id";
         $stmt = $pdo->prepare($sql_request);
 
@@ -25,6 +25,6 @@ foreach ($token as $user_id => $token_value) {
         echo json_encode(['success' => false, 'message' => 'Token invalide.']);
     }
 
-    unset($_SESSION['token']);
+    unset($_SESSION['token']);// destruction de la session token
 }
 ?>
